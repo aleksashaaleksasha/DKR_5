@@ -1,9 +1,11 @@
-﻿var choose,n,i,x : integer;
+﻿var choose,n,i : integer;
 M : array of integer;
 //C : array of integer;
 f : text;
+wf : text;
 
 procedure array_from_file(ff : text);
+var x : integer;
 begin
   reset(ff);
   while not Eof(ff) do begin
@@ -78,7 +80,7 @@ begin
   Writeln('2 – Второй массив');
   Writeln('3 – Третий массив');
   Writeln('0 – Задать массив самостоятельно');
-  
+  Assign(wf, 'write_array.txt');
   readln(choose);
   case choose of
     1 : begin Assign(f, 'array1.txt'); array_from_file(f); end;
@@ -98,6 +100,11 @@ begin
     2 : q_sort(0,n-1,M);
     //0 : exit
   end;
-  write(M);
-
+  writeln(M);
+  Rewrite(wf, 'write_array.txt');
+  for i := 0 to length(M) - 1 do begin
+    writeln(wf, M[i]);
+  end;
+  CloseFile(wf);
+  writeln('Массив сохранён в файл write_array.txt');
 end.
